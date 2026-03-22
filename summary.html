@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary | Readers Realm</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .summary-wrapper {
+            margin-top: 40px;
+        }
+
+        .summary-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* ================= ITEMS ================= */
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* ================= BOX ================= */
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .summary-total {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .pay-btn {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        /* ================= USER ================= */
+        .user-box {
+            margin-bottom: 15px;
+        }
+
+        .user-box p {
+            margin: 5px 0;
+        }
+
+        /* MOBILE */
+        @media(max-width:768px){
+            .summary-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+    <nav class="navbar container">
+        <div class="logo">
+            <img src="images/logo.png">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container summary-wrapper">
+
+    <h1>Order Summary 📦</h1>
+
+    <div class="summary-layout">
+
+        <!-- LEFT: ITEMS -->
+        <div id="summary-items"></div>
+
+        <!-- RIGHT: SUMMARY -->
+        <div class="summary-box">
+
+            <h3>Customer Details</h3>
+            <div class="user-box" id="user-details"></div>
+
+            <h3>Bill Details</h3>
+
+            <div class="summary-line">
+                <span>Items</span>
+                <span id="item-count">0</span>
+            </div>
+
+            <div class="summary-line summary-total">
+                <span>Total</span>
+                <span id="total-price">₹0</span>
+            </div>
+
+            <button class="btn primary pay-btn" onclick="goToPayment()">
+                Proceed to Payment
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ================= LOAD DATA ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let user = JSON.parse(localStorage.getItem("user")) || {};
+
+const container = document.getElementById("summary-items");
+const totalDisplay = document.getElementById("total-price");
+const itemCount = document.getElementById("item-count");
+const userBox = document.getElementById("user-details");
+
+/* ================= USER ================= */
+userBox.innerHTML = `
+    <p><strong>Name:</strong> ${user.name || "-"}</p>
+    <p><strong>Address:</strong> ${user.address || "-"}</p>
+    <p><strong>Phone:</strong> ${user.phone || "-"}</p>
+`;
+
+/* ================= ITEMS ================= */
+let total = 0;
+let count = 0;
+
+cart.forEach(item => {
+
+    const itemTotal = item.price * item.quantity;
+
+    total += itemTotal;
+    count += item.quantity;
+
+    container.innerHTML += `
+        <div class="summary-item">
+            <div>
+                <h3>${item.title}</h3>
+                <p>₹${item.price} × ${item.quantity}</p>
+            </div>
+            <div>₹${itemTotal}</div>
+        </div>
+    `;
+});
+
+/* ================= TOTAL ================= */
+totalDisplay.innerText = "₹" + total;
+itemCount.innerText = count;
+
+/* ================= NAVIGATION ================= */
+function goToPayment() {
+    window.location.href = "payment.html";
+}
+
+</script>
+
+</body>
+</html>

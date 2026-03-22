@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product | Readers Realm</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .product-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .product-img img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+
+        .price {
+            font-size: 22px;
+            color: #089da1;
+            margin: 10px 0;
+        }
+
+        .qty-box button {
+            padding: 5px 10px;
+        }
+
+        .reviews-section {
+            margin-top: 50px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .star-input span {
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.4;
+        }
+
+        .star-input span.active {
+            opacity: 1;
+        }
+
+        @media(max-width:768px){
+            .product-page {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar container">
+        <div class="logo">
+            <img src="images/logo.png">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+        </ul>
+
+        <div class="cart" onclick="goToCart()">
+            🛒 <span id="cart-count">0</span>
+        </div>
+    </nav>
+</header>
+
+<div class="container product-page">
+
+    <div class="product-img">
+        <img id="product-img">
+    </div>
+
+    <div>
+        <h1 id="product-title"></h1>
+        <p class="price" id="product-price"></p>
+
+        <p>Explore an engaging read crafted for passionate readers.</p>
+
+        <div class="qty-box">
+            <button onclick="changeQty(-1)">-</button>
+            <span id="qty">1</span>
+            <button onclick="changeQty(1)">+</button>
+        </div>
+
+        <div>
+            <button class="btn primary" onclick="addToCart()">Add to Cart</button>
+            <button class="btn" onclick="goToCart()">Go to Cart</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= REVIEWS ================= -->
+<div class="container reviews-section">
+
+    <h2>⭐ Reviews</h2>
+
+    <select id="sort" onchange="sortReviews()">
+        <option value="latest">Latest</option>
+        <option value="highest">Highest Rating</option>
+    </select>
+
+    <div id="avg"></div>
+    <div id="reviews"></div>
+
+    <h3>Add Review</h3>
+
+    <input id="name" placeholder="Your Name">
+
+    <div class="star-input" id="stars">
+        <span data-v="1">⭐</span>
+        <span data-v="2">⭐</span>
+        <span data-v="3">⭐</span>
+        <span data-v="4">⭐</span>
+        <span data-v="5">⭐</span>
+    </div>
+
+    <textarea id="text" placeholder="Your review"></textarea>
+
+    <button class="btn primary" onclick="addReview()">Submit</button>
+
+</div>
+
+<script>
+
+/* ================= LOAD PRODUCT ================= */
+const id = parseInt(new URLSearchParams(location.search).get("id"));
+const books = JSON.parse(localStorage.getItem("books")) || [];
+const product = books.find(b => b.id === id);
+
+if (!product) {
+    document.body.innerHTML = "<h2>Product not found</h2>";
+}
+
+/* ================= SET DATA ================= */
+document.getElementById("product-img").src = product.img;
+document.getElementById("product-title").innerText = product.title;
+document.getElementById("product-price").innerText = "₹" + product.price;
+
+/* ================= CART ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function updateCartCount() {
+    const count = cart.reduce((a, b) => a + b.quantity, 0);
+    document.getElementById("cart-count").innerText = count;
+}
+updateCartCount();
+
+let qty = 1;
+
+function changeQty(v) {
+    qty += v;
+    if (qty < 1) qty = 1;
+    document.getElementById("qty").innerText = qty;
+}
+
+function addToCart() {
+    const item = cart.find(i => i.id === product.id);
+
+    if (item) item.quantity += qty;
+    else cart.push({ ...product, quantity: qty });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+
+    alert("Added to cart");
+}
+
+function goToCart() {
+    location.href = "cart.html";
+}
+
+/* ================= REVIEWS ================= */
+const key = "reviews_" + id;
+let reviews = JSON.parse(localStorage.getItem(key)) || [];
+let rating = 5;
+
+document.querySelectorAll("#stars span").forEach((s, i) => {
+    s.onclick = () => {
+        rating = i + 1;
+        document.querySelectorAll("#stars span").forEach(st => st.classList.remove("active"));
+        for (let j = 0; j < rating; j++) {
+            document.querySelectorAll("#stars span")[j].classList.add("active");
+        }
+    };
+});
+
+function renderReviews() {
+    const list = document.getElementById("reviews");
+    const avg = document.getElementById("avg");
+
+    list.innerHTML = "";
+
+    if (!reviews.length) {
+        avg.innerText = "No reviews yet";
+        return;
+    }
+
+    let total = 0;
+
+    reviews.forEach(r => {
+        total += r.rating;
+
+        list.innerHTML += `
+            <div class="review-card">
+                <h4>${r.name}</h4>
+                <div>${"⭐".repeat(r.rating)}</div>
+                <p>${r.text}</p>
+                <small>${r.date}</small>
+            </div>
+        `;
+    });
+
+    avg.innerText = "Rating: " + (total / reviews.length).toFixed(1);
+}
+
+function addReview() {
+    const name = document.getElementById("name").value;
+    const text = document.getElementById("text").value;
+
+    if (!name || !text) return alert("Fill all fields");
+
+    reviews.unshift({
+        name,
+        text,
+        rating,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(key, JSON.stringify(reviews));
+
+    renderReviews();
+}
+
+function sortReviews() {
+    const type = document.getElementById("sort").value;
+
+    if (type === "highest") {
+        reviews.sort((a, b) => b.rating - a.rating);
+    } else {
+        reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    renderReviews();
+}
+
+renderReviews();
+
+</script>
+
+</body>
+</html>

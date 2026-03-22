@@ -1,801 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Store Website</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+
+    <!-- SEO -->
+    <title>Readers Realm | Book Store</title>
+    <meta name="description" content="Explore books, discover stories, and shop your favorites at Readers Realm.">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
 </head>
+
 <body>
-    
-    <section>
 
-        <nav>
+<!-- ================= NAVBAR ================= -->
 
-            <div class="logo">
-                <img src="image/logo.png">
-            </div>
+<header>
+    <nav class="navbar container">
 
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#featured">Featured</a></li>
-                <li><a href="#arrivals">Arrivals</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="image/login.html">Login</a></li>
-           
-  
-            </ul>
+        <!-- LOGO -->
+        <div class="logo">
+            <img src="images/logo.png" alt="Readers Realm Logo">
+        </div>
 
-            <div class="social_icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <i class="fa-solid fa-heart"></i>
+        <!-- LINKS -->
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#featured">Books</a></li>
+            <li><a href="#arrivals">Arrivals</a></li>
+        </ul>
+
+        <!-- SEARCH -->
+        <div class="search-box">
+            <input type="text" placeholder="Search books...">
+        </div>
+
+        <!-- ICONS -->
+        <div class="nav-icons">
+
+            <!-- ❤️ Wishlist (future feature) -->
+            <i class="fa-solid fa-heart" title="Wishlist"></i>
+
+            <!-- 🛒 CART -->
+            <div class="cart" onclick="goToCart()">
                 <i class="fa-solid fa-shopping-cart"></i>
-                <i class="fa-solid fa-credit-card"></i>
-                
+                <span class="cart-count">0</span>
             </div>
 
-        </nav>
-        <h1 id="home">Home</h1>
-        <div class="main">
-
-            <div class="main_tag">
-                <h1>WELCOME TO<br><span>READERS REALM</span></h1>
-
-                <p>
-                    Welcome to Readers Realm, where every page tells a story and every shelf holds a world of possibilities. Dive into a curated collection of timeless classics, thrilling mysteries, heartwarming romances, and thought-provoking literature. Our shelves are stocked with the literary gems that spark imagination and captivate hearts. Embark on a literary journey with us, where every book is an invitation to explore, dream, and connect.
-                </p>
-                <a href="#" class="main_btn">Learn More</a>
-
-            </div>
-
-            <div class="main_img">
-                <img src="image/table.png">
-            </div>
+            <div id="auth-area"></div>
 
         </div>
 
-    </section>
+        <!-- MOBILE MENU -->
+        <div class="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
 
+    </nav>
+</header>
 
+<!-- ================= HERO ================= -->
 
+<section id="home" class="hero container">
 
-    <!--Services-->
+    <div class="hero-text">
+        <h1>Welcome to <span>Readers Realm</span></h1>
+        <p>
+            Discover books that inspire, entertain, and transform your thinking.
+        </p>
+        <a href="#featured" class="btn primary">Explore Books</a>
+    </div>
 
-    <div class="services">
+    <div class="hero-image">
+        <img src="images/table.png" alt="Books" loading="lazy">
+    </div>
 
-        <div class="services_box">
+</section>
 
-            <div class="services_card">
-                <i class="fa-solid fa-truck-fast"></i>
-                <h3>Fast Delivery</h3>
-                <p>
-                    Fast & free delivery to your home or office. We will deliver it, wherever you are! 
-                </p>
-            </div>
+<!-- ================= SERVICES ================= -->
 
-            <div class="services_card">
-                <i class="fa-solid fa-headset"></i>
-                <h3>24 x 7 Services</h3>
-                <p>
-                    24/7 available 
-                </p>
-            </div>
+<section class="services container">
 
-            <div class="services_card">
-                <i class="fa-solid fa-tag"></i>
-                <h3>Best Deal</h3>
-                <p>
-                    Explore the wide range of variety of titles across various categories at best and affordable price with good user experience.
-                </p>
-            </div>
+    <div class="service-card">
+        <i class="fa-solid fa-truck-fast"></i>
+        <h3>Fast Delivery</h3>
+        <p>Quick delivery anywhere.</p>
+    </div>
 
-            <div class="services_card">
-                <i class="fa-solid fa-lock"></i>
-                <h3>Secure Payment</h3>
-                <p>
-                    Readers Realm Secure your Card with atmost care. 
-                </p>
-            </div>
+    <div class="service-card">
+        <i class="fa-solid fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>Always available for you.</p>
+    </div>
 
+    <div class="service-card">
+        <i class="fa-solid fa-tag"></i>
+        <h3>Best Deals</h3>
+        <p>Affordable pricing for all.</p>
+    </div>
+
+    <div class="service-card">
+        <i class="fa-solid fa-lock"></i>
+        <h3>Secure Payment</h3>
+        <p>Safe and trusted checkout.</p>
+    </div>
+
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="about container">
+
+    <div class="about-image">
+        <img src="images/about.png" alt="About Readers Realm" loading="lazy">
+    </div>
+
+    <div class="about-content">
+        <h2>About Us</h2>
+        <p>
+            Readers Realm is a modern digital bookstore designed for passionate readers.
+            Discover books, explore genres, and enjoy a seamless reading experience.
+        </p>
+    </div>
+
+</section>
+
+<!-- ================= FEATURED ================= -->
+
+<section id="featured" class="container">
+
+    <div class="section-header">
+        <h2>Featured Books</h2>
+    </div>
+
+    <!-- 🔥 Dynamic Rendering -->
+    <div class="book-grid" id="book-list"></div>
+
+</section>
+
+<!-- ================= ARRIVALS ================= -->
+
+<section id="arrivals" class="container">
+
+    <div class="section-header">
+        <h2>New Arrivals</h2>
+    </div>
+
+    <div class="book-grid">
+
+        <div class="book-card">
+            <img src="images/arrival_1.jpg" alt="New Arrival" loading="lazy">
+            <h3>New Book</h3>
+            <button class="btn">View</button>
         </div>
 
     </div>
 
+</section>
 
+<!-- ================= CTA ================= -->
 
+<section class="cta">
+    <h2>Start Your Reading Journey 📚</h2>
+</section>
 
-    <!--About-->
+<!-- ================= FOOTER ================= -->
 
-    <div class="about">
+<footer>
+    <p>© 2026 Readers Realm | All Rights Reserved</p>
+</footer>
 
-        <div class="about_image">
-            <img src="image/about.png">
-        </div>
-        <div class="about_tag">
-            <h1 id="about">About Us</h1>
-            <p>
-                Meet the literary dreamweaver behind the shelves, the curator of stories, and the captain of this bookish voyage. Hi, I'm Devbrat Kumar Saha, your literary guide in the enchanting realm of Readers Realm.With a heart full of passion for storytelling and a penchant for discovering hidden gems, I've woven a tapestry of tales within these virtual walls. Join me on this bibliophilic adventure where each book is a doorway to imagination, and every page turned is a step into a world of wonders. Let's embark on a journey through the written word together, turning mere sentences into unforgettable stories. Welcome to a realm where reading is not just a pastime but a magical odyssey – welcome to Readers Realm
-            </p>
-            <a href="#" class="about_btn">Learn More</a>
-        </div>
+<!-- ================= JS (CORRECT ORDER) ================= -->
 
-    </div>
+<!-- DATA -->
+<script src="js/data.js"></script>
 
+<!-- SERVICES -->
+<script src="js/services/bookService.js"></script>
+<script src="js/services/cartService.js"></script>
+<script src="js/services/orderService.js"></script>
+<script src="js/services/authService.js"></script>
 
+<!-- GLOBAL -->
+<script src="js/main.js"></script>
 
+<!-- PAGE LOGIC -->
+<script src="js/pages/home.js"></script>
 
-
-    <!--Books-->
-     <h1 id="featured">Featured Books</h1>
-
-    <div class="featured_boks">
-
-        <h1>Featured Books</h1>
-
-        <div class="featured_book_box">
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_1.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_2.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_3.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_4.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_5.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-            
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_6.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_7.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_8.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_9.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_10.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_11.jpg">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_12.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_13.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_14.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            <div class="featured_book_card">
-
-                <div class="featurde_book_img">
-                    <img src="image/book_15.png">
-                </div>
-
-                <div class="featurde_book_tag">
-                    <h2>Featured Books</h2>
-                    <p class="writer">Devbrat Kumar Saha</p>
-                    <div class="categories">Thriller, Horror, Romance</div>
-                    <p class="book_price">₹399<sub><del>₹899</del></sub></p>
-                    <a href="#" class="f_btn">Add to Chart</a>
-                </div>               
-
-            </div>
-
-            
-
-        </div>
-
-    </div>
-
-
-
-    
-    <!--Arrivals-->
-
-    <div class="arrivals">
-        <h1 id="arrivals">New Arrivals</h1>
-
-        <div class="arrivals_box">
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_1.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_2.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_3.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_4.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_5.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_6.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_7.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_8.webp">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_9.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-            <div class="arrivals_card">
-                <div class="arrivals_image">
-                    <img src="image/arrival_10.jpg">
-                </div>
-                <div class="arrivals_tag">
-                    <p>New Arrivals</p>
-                    <div class="arrivals_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                    <a href="#" class="arrivals_btn">Learn More</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-
-
-    <!--reviews-->
-
-    <div class="reviews">
-        <h1 id="reviews">Reviews</h1>
-
-        <div class="review_box">
-
-            <div class="review_card">
-                <i class="fa-solid fa-quote-right"></i>
-                <div class="card_top">
-                    <img src="image/review_1.png">
-                </div>
-                <div class="card">
-                    <h2>Devbrat Kumar Saha</h2>
-                    <p>In my own quest to understand Chess Story, I gradually realized that I would have to learn the game it centers on. And that has led me into a second obsession, much more problematic: I have fallen passionately in love with online bullet chess.
-                    </p>
-                    <div class="review_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review_card">
-                <i class="fa-solid fa-quote-right"></i>
-                <div class="card_top">
-                    <img src="image/review_2.png">
-                </div>
-                <div class="card">
-                    <h2>Riju Kumar Saha</h2>
-                    <p>I like this book because dog man is very smart and powerful. my favorite part dog man saving the world,my not favorite part is petey tried to escape from cat jail and tried to make people dumb. 
-                    </p>
-                    <div class="review_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review_card">
-                <i class="fa-solid fa-quote-right"></i>
-                <div class="card_top">
-                    <img src="image/review_3.png">
-                </div>
-                <div class="card">
-                    <h2>Sanjiv Kumar Mandal</h2>
-                    <p>What i liked about this book is that melvin and naomi became happy with each other. what i dont like about this book is they keep fighting.
-                    </p>
-                    <div class="review_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review_card">
-                <i class="fa-solid fa-quote-right"></i>
-                <div class="card_top">
-                    <img src="image/review_4.png">
-                </div>
-                <div class="card">
-                    <h2>Abdul Shekh</h2>
-                    <p>Geronimo Stliton is a realy good book .it has so many adventurs featurs .I love the book most because it has funny parts in the book.
-                    </p>
-                    <div class="review_icon">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!--Banner-->
-
-    <div class="banner">
-        <a href="#" class="banner_btn">Learn More</a>
-    </div>
-
-
-
-
-
-    <!--Blog-->
-    
-    <div class="blog">
-        <h1 id="blog">Our Blog</h1>
-        <div class="blog_box">
-
-            <div class="blog_card">
-                <div class="blog_img">
-                    <img src="image/blog_1.jpg">
-                </div>
-                <div class="blog_tag">
-                    <h2>🏅 Our Pick - Classy Career Girl</h2>
-                    <p>
-                        Do you dread Mondays? Well, it’s common among those who don’t love their work. Anna Runyan, a former corporate consultant turned entrepreneur, will help you create an effective career plan so that you can do what you really love with her womens blog. Her woman blog is an informative platform where you can expect content on business ideas, side hustle, following your passion, and honest success stories.
-                    </p>
-                    <div class="blog_icon">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="blog_card">
-                <div class="blog_img">
-                    <img src="image/blog_2.jpg">
-                </div>
-                <div class="blog_tag">
-                    <h2>Best Indian Fantasy Novels: Unveiling the Crème de la crème of 2023</h2>
-                    <p>
-                        In this article, we have curated a selection of four extraordinary Indian fantasy novels, all freshly published in 2023. These literary gems represent the pinnacle of Indian fantasy writing for this year, showcasing the evolution and expansion of the genre in India. These books are a testament to the boundless creativity of Indian authors, offering readers a portal to captivating new worlds.
-                    </p>
-                    <div class="blog_icon">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="blog_card">
-                <div class="blog_img">
-                    <img src="image/blog_3.jpg">
-                </div>
-                <div class="blog_tag">
-                    <h2>Indian Bookstagrammers | Top 8 Accounts to Follow</h2>
-                    <p>
-                        In this compilation, we present a handpicked selection of the best Indian bookstagrammers— communities, and individuals who have wholeheartedly dedicated their Instagram accounts to the service and adoration of books. Join us on a journey through the vibrant world of literature lovers from India.
-                    </p>
-                    <div class="blog_icon">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-
-
-
-    <!--Footer-->
-
-    <footer>
-        <div class="footer_main">
-
-            <div class="tag">
-                <img src="image/logo.png">
-                <p>
-                    Explore worlds within pages. Immerse yourself in captivating tales that transport, educate, and inspire. Discover your next literary adventure with Readers Realm. Uncover stories that resonate. Embrace the magic of words and embark on a journey that lasts long after the final chapter. Start your next chapter today.
-                </p>
-
-            </div>
-
-            <div class="tag">
-                <h1>Quick Link</h1>
-               <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#featured">Featured</a>
-                <a href="#arrivals">Arrivals</a>
-                <a href="#reviews">Reviews</a>
-                <a href="#blog">Blog</a>
-                
-            </div>
-
-            <div class="tag">
-                <h1>Contact Info</h1>
-                <a href="#"><i class="fa-solid fa-person"></i> Devbrat Kumar Saha</a>
-                <a href="#"><i class="fa-solid fa-university"></i> University Roll no.- 206041324123</a>
-                <a href="#"><i class="fa-solid fa-location"></i> Sahebganj College, Sahebganj</a>
-                <a href="#"><i class="fa-solid fa-phone"></i>+91 6204745835</a>
-                <a href="#"><i class="fa-solid fa-envelope"></i>devbratsaha3516@gmail.com</a>
-                
-            </div>
-
-            <div class="tag">
-                <h1>Follow Us</h1>
-                <div class="social_link">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    <i class="fa-brands fa-linkedin-in"></i>
-                </div>
-                
-            </div>
-
-            <div class="tag">
-                <h1>Newsletter</h1>
-                <div class="search_bar">
-                    <input type="text" placeholder="You email id here">
-                    <button type="submit">Subscribe</button>
-                </div>                
-            </div>            
-            
-        </div>
-
-        <p class="end">Design By<span><i class="fa-solid fa-face-grin"></i> DEVBRAT KUMAR SAHA</span></p>
-
-    </footer>
-
-
-
-
-
-    
 </body>
 </html>

@@ -1,0 +1,299 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ================= NAVBAR ================= */
+header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo img {
+    width: 100px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #089da1;
+}
+
+/* ================= SEARCH ================= */
+.search-box {
+    display: flex;
+    background: #f1f5f9;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+/* ================= ICONS ================= */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-icons i {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-icons i:hover {
+    color: #089da1;
+}
+
+.cart {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #089da1;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* ================= HERO ================= */
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 80px 0;
+}
+
+.hero h1 {
+    font-size: 42px;
+}
+
+.hero span {
+    color: #089da1;
+}
+
+.hero p {
+    margin: 10px 0;
+    color: #64748b;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #089da1;
+    text-decoration: none;
+    color: #089da1;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn.primary {
+    background: #089da1;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ================= SERVICES ================= */
+.services {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.service-card {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ================= ABOUT ================= */
+.about {
+    display: flex;
+    gap: 40px;
+    margin: 80px 0;
+}
+
+/* ================= SECTION HEADER ================= */
+.section-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ================= BOOK GRID ================= */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.book-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* ================= CART PAGE ================= */
+.cart-container {
+    padding: 40px 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.cart-actions button {
+    margin: 0 5px;
+}
+
+/* ================= SUMMARY ================= */
+.summary-box {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+/* ================= PAYMENT ================= */
+.payment-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.payment-box button {
+    margin: 10px;
+}
+
+/* ================= INPUT ================= */
+input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* ================= CTA ================= */
+.cta {
+    background: #089da1;
+    color: white;
+    text-align: center;
+    padding: 50px;
+    margin-top: 50px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: #eaeaea;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ================= SMOOTH ================= */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about {
+        flex-direction: column;
+    }
+
+    .services {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .search-box {
+        display: none;
+    }
+}

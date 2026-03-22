@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | Readers Realm</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .payment-wrapper {
+            margin-top: 40px;
+        }
+
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* ================= METHODS ================= */
+        .payment-methods {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .method {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .method:hover {
+            border-color: #089da1;
+        }
+
+        .method.active {
+            border-color: #089da1;
+            background: #f0fdfd;
+        }
+
+        /* ================= SUMMARY ================= */
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .summary-total {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .pay-btn {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        /* MOBILE */
+        @media(max-width:768px){
+            .payment-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+    <nav class="navbar container">
+        <div class="logo">
+            <img src="images/logo.png">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container payment-wrapper">
+
+    <h1>Payment 💳</h1>
+
+    <div class="payment-layout">
+
+        <!-- LEFT: METHODS -->
+        <div class="payment-methods">
+
+            <h3>Select Payment Method</h3>
+
+            <div class="method" onclick="selectMethod(this, 'UPI')">
+                UPI Payment
+            </div>
+
+            <div class="method" onclick="selectMethod(this, 'Card')">
+                Credit / Debit Card
+            </div>
+
+            <div class="method" onclick="selectMethod(this, 'Net Banking')">
+                Net Banking
+            </div>
+
+        </div>
+
+        <!-- RIGHT: SUMMARY -->
+        <div class="summary-box">
+
+            <h3>Order Summary</h3>
+
+            <div class="summary-line">
+                <span>Items</span>
+                <span id="item-count">0</span>
+            </div>
+
+            <div class="summary-line summary-total">
+                <span>Total</span>
+                <span id="total-price">₹0</span>
+            </div>
+
+            <button class="btn primary pay-btn" onclick="pay()">
+                Pay Now
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ================= LOAD CART ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const totalDisplay = document.getElementById("total-price");
+const itemCount = document.getElementById("item-count");
+
+let total = 0;
+let count = 0;
+
+cart.forEach(item => {
+    total += item.price * item.quantity;
+    count += item.quantity;
+});
+
+totalDisplay.innerText = "₹" + total;
+itemCount.innerText = count;
+
+/* ================= SELECT METHOD ================= */
+let selectedMethod = "";
+
+function selectMethod(el, method) {
+
+    selectedMethod = method;
+
+    document.querySelectorAll(".method").forEach(m => {
+        m.classList.remove("active");
+    });
+
+    el.classList.add("active");
+}
+
+/* ================= PAYMENT ================= */
+function pay() {
+
+    if (!selectedMethod) {
+        alert("Please select payment method");
+        return;
+    }
+
+    alert(selectedMethod + " Payment Successful ✅");
+
+    localStorage.removeItem("cart");
+
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>
