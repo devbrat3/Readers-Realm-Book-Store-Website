@@ -1,151 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart | Readers Realm</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* ================= LAYOUT ================= */
-        .cart-wrapper {
-            margin-top: 40px;
-        }
+<title>Cart | Readers Realm</title>
 
-        .cart-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
+<link rel="stylesheet" href="css/style.css">
 
-        /* ================= CART ITEMS ================= */
-        .cart-item {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: 0.3s;
-        }
-
-        .cart-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .cart-item img {
-            width: 80px;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .cart-details {
-            flex: 1;
-        }
-
-        .cart-price {
-            color: #089da1;
-            font-weight: bold;
-        }
-
-        .cart-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cart-actions button {
-            padding: 5px 10px;
-            border: none;
-            background: #089da1;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .remove-btn {
-            background: #ef4444;
-        }
-
-        /* ================= SUMMARY ================= */
-        .summary-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .summary-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-
-        .summary-total {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        .empty {
-            text-align: center;
-            margin-top: 40px;
-            color: #64748b;
-        }
-
-        /* ================= MOBILE ================= */
-        @media(max-width:768px){
-            .cart-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
+
 <header>
     <nav class="navbar container">
+
         <div class="logo">
-            <img src="images/logo.png">
+            <img src="images/logo.png" alt="logo">
         </div>
 
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
         </ul>
+
     </nav>
 </header>
 
+
+<!-- ================= CART ================= -->
+
 <div class="container cart-wrapper">
 
-    <h1>Your Cart 🛒</h1>
+    <h1 class="page-title">Your Cart 🛒</h1>
 
     <div class="cart-layout">
 
-        <!-- LEFT: ITEMS -->
-        <div id="cart-items"></div>
+        <!-- LEFT -->
+        <div id="cart-items" class="cart-items"></div>
 
-        <!-- RIGHT: SUMMARY -->
+        <!-- RIGHT -->
         <div class="summary-box">
 
             <h3>Order Summary</h3>
@@ -161,13 +58,15 @@
             </div>
 
             <!-- USER DETAILS -->
-            <h4 style="margin-top:15px;">Details</h4>
+            <div class="user-form">
+                <h4>Delivery Details</h4>
 
-            <input placeholder="Full Name" id="name">
-            <input placeholder="Address" id="address">
-            <input placeholder="Phone Number" id="phone">
+                <input placeholder="Full Name" id="name">
+                <input placeholder="Address" id="address">
+                <input placeholder="Phone Number" id="phone">
+            </div>
 
-            <button class="btn primary checkout-btn" onclick="goToSummary()">
+            <button class="btn primary checkout-btn" id="checkoutBtn">
                 Proceed to Checkout
             </button>
 
@@ -177,20 +76,46 @@
 
 </div>
 
+
+<!-- ================= SCRIPTS ================= -->
+
+<script src="js/services/cartService.js"></script>
+<script src="js/services/authService.js"></script>
+<script src="js/services/orderService.js"></script>
+<script src="js/main.js"></script>
+
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* ================= INIT ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderCart();
+});
+
+
+/* ================= DOM ================= */
 
 const cartContainer = document.getElementById("cart-items");
 const totalDisplay = document.getElementById("total-price");
 const itemCount = document.getElementById("item-count");
+const checkoutBtn = document.getElementById("checkoutBtn");
+
 
 /* ================= RENDER ================= */
+
 function renderCart() {
+
+    const cart = CartService.getCart();
 
     cartContainer.innerHTML = "";
 
-    if (cart.length === 0) {
-        cartContainer.innerHTML = `<p class="empty">Your cart is empty 🛍️</p>`;
+    if (!cart.length) {
+        cartContainer.innerHTML = `
+            <div class="empty">
+                <h2>Your cart is empty 🛍️</h2>
+                <p>Browse books and add your favorites</p>
+            </div>
+        `;
         totalDisplay.innerText = "₹0";
         itemCount.innerText = "0";
         return;
@@ -206,26 +131,38 @@ function renderCart() {
         count += item.quantity;
 
         cartContainer.innerHTML += `
+
             <div class="cart-item">
 
-                <img src="${item.img}" alt="${item.title}">
+                <!-- IMAGE -->
+                <div class="cart-img">
+                    <img src="${item.img}" alt="${item.title}">
+                </div>
 
+                <!-- DETAILS -->
                 <div class="cart-details">
                     <h3>${item.title}</h3>
                     <p class="cart-price">₹${item.price}</p>
+
+                    <div class="cart-actions">
+                        <button onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQty(${index}, 1)">+</button>
+                    </div>
                 </div>
 
-                <div class="cart-actions">
-                    <button onclick="changeQty(${index}, -1)">-</button>
-                    ${item.quantity}
-                    <button onclick="changeQty(${index}, 1)">+</button>
+                <!-- PRICE -->
+                <div class="cart-total">
+                    ₹${itemTotal}
                 </div>
 
-                <div>₹${itemTotal}</div>
-
-                <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+                <!-- REMOVE -->
+                <button class="remove-btn" onclick="removeItem(${index})">
+                    ✕
+                </button>
 
             </div>
+
         `;
     });
 
@@ -233,44 +170,49 @@ function renderCart() {
     itemCount.innerText = count;
 }
 
-/* ================= QUANTITY ================= */
+
+/* ================= ACTIONS ================= */
+
 function changeQty(index, delta) {
-    cart[index].quantity += delta;
-
-    if (cart[index].quantity <= 0) {
-        cart.splice(index, 1);
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    CartService.updateQuantity(index, delta);
     renderCart();
 }
 
-/* ================= REMOVE ================= */
 function removeItem(index) {
-    cart.splice(index, 1);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    CartService.removeItem(index);
     renderCart();
 }
+
 
 /* ================= CHECKOUT ================= */
-function goToSummary() {
+
+checkoutBtn.addEventListener("click", () => {
+
+    const user = AuthService.getCurrentUser();
+
+    if (!user) {
+        App.showToast("Please login first 🔐", "warning");
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1000);
+        return;
+    }
 
     const name = document.getElementById("name").value;
     const address = document.getElementById("address").value;
     const phone = document.getElementById("phone").value;
 
     if (!name || !address || !phone) {
-        alert("Please fill all details");
+        App.showToast("Fill all details ⚠️", "error");
         return;
     }
 
     localStorage.setItem("user", JSON.stringify({ name, address, phone }));
 
     window.location.href = "summary.html";
-}
 
-/* ================= INIT ================= */
-renderCart();
+});
+
 </script>
 
 </body>

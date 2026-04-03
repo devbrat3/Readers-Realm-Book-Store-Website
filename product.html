@@ -2,184 +2,276 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product | Readers Realm</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        .product-page {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin: 50px 0;
-        }
+<title>Product | Readers Realm</title>
 
-        .product-img img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
-        }
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-        .price {
-            font-size: 22px;
-            color: #089da1;
-            margin: 10px 0;
-        }
+<style>
 
-        .qty-box button {
-            padding: 5px 10px;
-        }
+/* ================= PRODUCT LAYOUT ================= */
 
-        .reviews-section {
-            margin-top: 50px;
-        }
+.product-page {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+    margin-top: 50px;
+}
 
-        .review-card {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
+/* IMAGE */
+.product-img {
+    display: flex;
+    justify-content: center;
+}
 
-        .star-input span {
-            font-size: 22px;
-            cursor: pointer;
-            opacity: 0.4;
-        }
+.product-img img {
+    max-width: 320px;
+    height: 420px;
+    object-fit: contain;
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+}
 
-        .star-input span.active {
-            opacity: 1;
-        }
+/* DETAILS */
+.product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-        @media(max-width:768px){
-            .product-page {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-        }
-    </style>
+.product-title {
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 600;
+}
+
+.product-price {
+    font-size: 22px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.product-desc {
+    color: var(--muted);
+}
+
+/* QTY */
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-box button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+}
+
+/* ACTIONS */
+.product-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* ================= REVIEWS ================= */
+
+.reviews-section {
+    margin-top: 80px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 12px;
+}
+
+.review-card h4 {
+    margin-bottom: 5px;
+}
+
+/* STARS */
+.star-input {
+    display: flex;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.star-input span {
+    font-size: 22px;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.star-input span.active {
+    opacity: 1;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+    .product-page {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .product-actions {
+        justify-content: center;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
 
+<!-- ================= NAVBAR ================= -->
+
 <header>
-    <nav class="navbar container">
-        <div class="logo">
-            <img src="images/logo.png">
-        </div>
+<nav class="navbar container">
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-        </ul>
+<div class="logo">
+<img src="images/logo.png">
+</div>
 
-        <div class="cart" onclick="goToCart()">
-            🛒 <span id="cart-count">0</span>
-        </div>
-    </nav>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+</ul>
+
+<div class="cart">
+<i class="fa-solid fa-shopping-cart"></i>
+<span class="cart-count">0</span>
+</div>
+
+</nav>
 </header>
+
+
+<!-- ================= PRODUCT ================= -->
 
 <div class="container product-page">
 
-    <div class="product-img">
-        <img id="product-img">
-    </div>
+<div class="product-img">
+<img id="product-img">
+</div>
 
-    <div>
-        <h1 id="product-title"></h1>
-        <p class="price" id="product-price"></p>
+<div class="product-details">
 
-        <p>Explore an engaging read crafted for passionate readers.</p>
+<h1 class="product-title" id="product-title"></h1>
 
-        <div class="qty-box">
-            <button onclick="changeQty(-1)">-</button>
-            <span id="qty">1</span>
-            <button onclick="changeQty(1)">+</button>
-        </div>
+<p class="product-price" id="product-price"></p>
 
-        <div>
-            <button class="btn primary" onclick="addToCart()">Add to Cart</button>
-            <button class="btn" onclick="goToCart()">Go to Cart</button>
-        </div>
-    </div>
+<p class="product-desc">
+Premium reading experience crafted for curious minds.
+</p>
+
+<div class="qty-box">
+<button onclick="changeQty(-1)">−</button>
+<span id="qty">1</span>
+<button onclick="changeQty(1)">+</button>
+</div>
+
+<div class="product-actions">
+<button class="btn primary" onclick="addToCart()">Add to Cart</button>
+<button class="btn" onclick="goToCart()">Go to Cart</button>
+</div>
 
 </div>
+
+</div>
+
 
 <!-- ================= REVIEWS ================= -->
+
 <div class="container reviews-section">
 
-    <h2>⭐ Reviews</h2>
+<div class="review-header">
+<h2>⭐ Reviews</h2>
+<select id="sort">
+<option value="latest">Latest</option>
+<option value="highest">Highest Rating</option>
+</select>
+</div>
 
-    <select id="sort" onchange="sortReviews()">
-        <option value="latest">Latest</option>
-        <option value="highest">Highest Rating</option>
-    </select>
+<div id="avg"></div>
+<div id="reviews"></div>
 
-    <div id="avg"></div>
-    <div id="reviews"></div>
+<h3>Add Review</h3>
 
-    <h3>Add Review</h3>
+<input id="name" placeholder="Your Name">
 
-    <input id="name" placeholder="Your Name">
+<div class="star-input" id="stars">
+<span>⭐</span>
+<span>⭐</span>
+<span>⭐</span>
+<span>⭐</span>
+<span>⭐</span>
+</div>
 
-    <div class="star-input" id="stars">
-        <span data-v="1">⭐</span>
-        <span data-v="2">⭐</span>
-        <span data-v="3">⭐</span>
-        <span data-v="4">⭐</span>
-        <span data-v="5">⭐</span>
-    </div>
+<textarea id="text" placeholder="Your review"></textarea>
 
-    <textarea id="text" placeholder="Your review"></textarea>
-
-    <button class="btn primary" onclick="addReview()">Submit</button>
+<button class="btn primary" onclick="addReview()">Submit</button>
 
 </div>
+
+
+<!-- ================= SCRIPTS ================= -->
+
+<script src="js/data.js"></script>
+<script src="js/services/bookService.js"></script>
+<script src="js/services/cartService.js"></script>
+<script src="js/services/reviewService.js"></script>
+<script src="js/services/ratingService.js"></script>
+<script src="js/main.js"></script>
 
 <script>
 
-/* ================= LOAD PRODUCT ================= */
+/* ================= PRODUCT ================= */
+
 const id = parseInt(new URLSearchParams(location.search).get("id"));
-const books = JSON.parse(localStorage.getItem("books")) || [];
-const product = books.find(b => b.id === id);
+const product = BookService.getBookById(id);
 
 if (!product) {
-    document.body.innerHTML = "<h2>Product not found</h2>";
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Product not found</h2>";
 }
 
-/* ================= SET DATA ================= */
+/* SET UI */
 document.getElementById("product-img").src = product.img;
 document.getElementById("product-title").innerText = product.title;
 document.getElementById("product-price").innerText = "₹" + product.price;
 
 /* ================= CART ================= */
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function updateCartCount() {
-    const count = cart.reduce((a, b) => a + b.quantity, 0);
-    document.getElementById("cart-count").innerText = count;
-}
-updateCartCount();
 
 let qty = 1;
 
 function changeQty(v) {
-    qty += v;
-    if (qty < 1) qty = 1;
+    qty = Math.max(1, qty + v);
     document.getElementById("qty").innerText = qty;
 }
 
 function addToCart() {
-    const item = cart.find(i => i.id === product.id);
-
-    if (item) item.quantity += qty;
-    else cart.push({ ...product, quantity: qty });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-
-    alert("Added to cart");
+    CartService.addItem(product, qty);
+    document.dispatchEvent(new Event("cartUpdated"));
+    App.showToast("Added to cart 🛒");
 }
 
 function goToCart() {
@@ -187,79 +279,77 @@ function goToCart() {
 }
 
 /* ================= REVIEWS ================= */
-const key = "reviews_" + id;
-let reviews = JSON.parse(localStorage.getItem(key)) || [];
-let rating = 5;
 
-document.querySelectorAll("#stars span").forEach((s, i) => {
-    s.onclick = () => {
-        rating = i + 1;
-        document.querySelectorAll("#stars span").forEach(st => st.classList.remove("active"));
-        for (let j = 0; j < rating; j++) {
-            document.querySelectorAll("#stars span")[j].classList.add("active");
+let selectedRating = 0;
+const stars = document.querySelectorAll("#stars span");
+
+stars.forEach((star, i) => {
+    star.onclick = () => {
+        selectedRating = i + 1;
+        stars.forEach(s => s.classList.remove("active"));
+        for (let j = 0; j < selectedRating; j++) {
+            stars[j].classList.add("active");
         }
     };
 });
 
 function renderReviews() {
-    const list = document.getElementById("reviews");
-    const avg = document.getElementById("avg");
 
-    list.innerHTML = "";
+    const list = document.getElementById("reviews");
+    const avgEl = document.getElementById("avg");
+
+    const sortType = document.getElementById("sort").value;
+    const reviews = ReviewService.getSorted(product.id, sortType);
 
     if (!reviews.length) {
-        avg.innerText = "No reviews yet";
+        avgEl.innerText = "No reviews yet";
+        list.innerHTML = "";
         return;
     }
 
-    let total = 0;
+    const avg = (
+        reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    ).toFixed(1);
 
-    reviews.forEach(r => {
-        total += r.rating;
+    avgEl.innerText = `Average Rating: ${avg} ⭐`;
 
-        list.innerHTML += `
-            <div class="review-card">
-                <h4>${r.name}</h4>
-                <div>${"⭐".repeat(r.rating)}</div>
-                <p>${r.text}</p>
-                <small>${r.date}</small>
-            </div>
-        `;
-    });
-
-    avg.innerText = "Rating: " + (total / reviews.length).toFixed(1);
+    list.innerHTML = reviews.map(r => `
+        <div class="review-card">
+            <h4>${r.name || "User"}</h4>
+            <div>${"⭐".repeat(r.rating)}</div>
+            <p>${r.text}</p>
+            <small>${new Date(r.date).toLocaleString()}</small>
+        </div>
+    `).join("");
 }
 
 function addReview() {
+
     const name = document.getElementById("name").value;
     const text = document.getElementById("text").value;
 
-    if (!name || !text) return alert("Fill all fields");
-
-    reviews.unshift({
-        name,
-        text,
-        rating,
-        date: new Date().toLocaleString()
-    });
-
-    localStorage.setItem(key, JSON.stringify(reviews));
-
-    renderReviews();
-}
-
-function sortReviews() {
-    const type = document.getElementById("sort").value;
-
-    if (type === "highest") {
-        reviews.sort((a, b) => b.rating - a.rating);
-    } else {
-        reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+    if (!text || !selectedRating) {
+        return App.showToast("Add rating & review", "warning");
     }
 
+    ReviewService.addReview(product.id, {
+        name,
+        text,
+        rating: selectedRating
+    });
+
+    RatingService.setRating(product.id, selectedRating);
+
+    document.getElementById("text").value = "";
+    selectedRating = 0;
+    stars.forEach(s => s.classList.remove("active"));
+
     renderReviews();
+    App.showToast("Review added ⭐");
 }
 
+/* INIT */
+document.getElementById("sort").addEventListener("change", renderReviews);
 renderReviews();
 
 </script>

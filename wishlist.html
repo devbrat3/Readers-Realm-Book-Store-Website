@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wishlist | Readers Realm</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<style>
+
+/* ===== PAGE ===== */
+
+.wishlist-container {
+    padding: 40px 0;
+}
+
+/* ===== GRID ===== */
+
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 20px;
+}
+
+/* ===== CARD ===== */
+
+.wishlist-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-8px);
+}
+
+/* ===== IMAGE ===== */
+
+.wishlist-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* ===== ACTIONS ===== */
+
+.wishlist-actions {
+    margin-top: 10px;
+}
+
+.wishlist-actions button {
+    margin: 5px;
+}
+
+/* ===== EMPTY ===== */
+
+.empty {
+    text-align: center;
+    margin-top: 50px;
+    color: #64748b;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+<nav class="navbar container">
+
+<div class="logo">
+<img src="images/logo.png">
+</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+</ul>
+
+</nav>
+</header>
+
+<!-- ================= CONTENT ================= -->
+
+<div class="container wishlist-container">
+
+<h1>My Wishlist ❤️</h1>
+
+<div id="wishlist-items" class="wishlist-grid"></div>
+
+</div>
+
+<!-- ================= JS ================= -->
+
+<script src="js/services/bookService.js"></script>
+<script src="js/services/cartService.js"></script>
+<script src="js/services/wishlistService.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+
+const container = document.getElementById("wishlist-items");
+
+/* ================= RENDER ================= */
+
+function renderWishlist() {
+
+    const data = WishlistService.getAll();
+
+    if (data.length === 0) {
+        container.innerHTML = `
+            <div class="empty">
+                <h2>Your wishlist is empty 💔</h2>
+                <p>Start adding your favorite books</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = data.map(item => `
+        <div class="wishlist-card">
+
+            <img src="${item.img}">
+            <h3>${item.title}</h3>
+            <p>₹${item.price}</p>
+
+            <div class="wishlist-actions">
+                <button class="btn primary" onclick="moveToCart(${item.id})">
+                    Move to Cart
+                </button>
+
+                <button class="btn" onclick="removeItem(${item.id})">
+                    Remove
+                </button>
+            </div>
+
+        </div>
+    `).join("");
+}
+
+/* ================= REMOVE ================= */
+
+function removeItem(id) {
+    WishlistService.remove(id);
+    showToast("Removed from wishlist");
+}
+
+/* ================= MOVE TO CART ================= */
+
+function moveToCart(id) {
+
+    const book = WishlistService.getAll().find(b => b.id === id);
+
+    if (!book) return;
+
+    CartService.addItem(book);
+    WishlistService.remove(id);
+
+    showToast("Moved to cart 🛒");
+}
+
+/* ================= AUTO UPDATE ================= */
+
+document.addEventListener("wishlistUpdated", renderWishlist);
+
+/* ================= INIT ================= */
+
+renderWishlist();
+
+</script>
+
+</body>
+
+</html>

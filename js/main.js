@@ -1,108 +1,219 @@
-/* ================= INIT ================= */
-document.addEventListener("DOMContentLoaded", () => {
-    initMenu();
-    initCartUI();
-    updateAuthUI();
-});
+/* ================= APP (GLOBAL CONTROLLER - FINAL FIXED) ================= */
 
+const App = (() => {
 
-/* ================= MOBILE MENU ================= */
-function initMenu() {
-    const toggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector(".nav-links");
+    /* ================= INIT ================= */
 
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener("click", () => {
-        nav.classList.toggle("active");
-    });
-
-    // Close menu on link click (better UX)
-    document.querySelectorAll(".nav-links a").forEach(link => {
-        link.addEventListener("click", () => {
-            nav.classList.remove("active");
-        });
-    });
-}
-
-
-/* ================= CART ================= */
-function initCartUI() {
-    updateCartUI();
-}
-
-function updateCartUI() {
-    const cartDisplay = document.querySelector(".cart-count");
-    if (!cartDisplay) return;
-
-    // Prefer CartService (future backend ready)
-    let cart = [];
-
-    if (window.CartService) {
-        cart = CartService.getCart();
-    } else {
-        cart = JSON.parse(localStorage.getItem("cart")) || [];
+    function init() {
+        UI.initMenu();
+        UI.initCart();
+        UI.initWishlist();
+        UI.initAuth();
+        UI.initNavigation(); // ✅ FIXED (important)
     }
 
-    const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    cartDisplay.textContent = totalQty;
-}
+    /* ================= UI MODULE ================= */
 
+    const UI = {
 
-/* ================= NAVIGATION ================= */
-function goToCart() {
-    window.location.href = "cart.html";
-}
+        /* ===== MENU ===== */
+        initMenu() {
+            const toggle = document.querySelector(".menu-toggle");
+            const nav = document.querySelector(".nav-links");
 
+            if (!toggle || !nav) return;
 
-/* ================= AUTH UI ================= */
-function updateAuthUI() {
+            toggle.addEventListener("click", () => {
+                nav.classList.toggle("active");
+            });
 
-    const authArea = document.getElementById("auth-area");
-    if (!authArea || !window.AuthService) return;
+            document.querySelectorAll(".nav-links a").forEach(link => {
+                link.addEventListener("click", () => nav.classList.remove("active"));
+            });
 
-    const user = AuthService.getCurrentUser();
+            document.addEventListener("click", (e) => {
+                if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+                    nav.classList.remove("active");
+                }
+            });
 
-    if (user) {
-        authArea.innerHTML = `
-            <span class="user-name">Hi, ${user.name}</span>
-            <button class="btn" onclick="logout()">Logout</button>
-        `;
-    } else {
-        authArea.innerHTML = `
-            <a href="login.html" class="btn">Login</a>
-        `;
-    }
-}
-
-function logout() {
-    if (window.AuthService) {
-        AuthService.logout();
-    }
-    location.reload();
-}
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") nav.classList.remove("active");
+            });
+        },
 
 
-/* ================= TOAST (GLOBAL UX) ================= */
-function showToast(message) {
+        /* ===== NAVIGATION (🔥 FIXED CORE ISSUE) ===== */
+        initNavigation() {
 
-    const toast = document.createElement("div");
-    toast.innerText = message;
+            const cartBtn = document.querySelector(".cart");
+            const wishlistBtn = document.querySelector(".wishlist");
 
-    toast.style.position = "fixed";
-    toast.style.bottom = "20px";
-    toast.style.right = "20px";
-    toast.style.background = "#089da1";
-    toast.style.color = "#fff";
-    toast.style.padding = "10px 15px";
-    toast.style.borderRadius = "6px";
-    toast.style.boxShadow = "0 5px 15px rgba(0,0,0,0.2)";
-    toast.style.zIndex = "999";
+            if (cartBtn) {
+                cartBtn.addEventListener("click", () => {
+                    window.location.href = "cart.html";
+                });
+            }
 
-    document.body.appendChild(toast);
+            if (wishlistBtn) {
+                wishlistBtn.addEventListener("click", () => {
+                    window.location.href = "wishlist.html";
+                });
+            }
+        },
 
-    setTimeout(() => {
-        toast.remove();
-    }, 2000);
-}
+
+        /* ===== CART ===== */
+        initCart() {
+            this.updateCart();
+
+            document.addEventListener("cartUpdated", () => {
+                this.updateCart();
+            });
+        },
+
+        updateCart() {
+            const el = document.querySelector(".cart-count");
+            if (!el) return;
+
+            const cart = window.CartService
+                ? CartService.getCart()
+                : JSON.parse(localStorage.getItem("cart")) || [];
+
+            const total = cart.reduce((sum, i) => sum + i.quantity, 0);
+            el.textContent = total;
+        },
+
+
+        /* ===== WISHLIST ===== */
+        initWishlist() {
+            this.updateWishlist();
+
+            document.addEventListener("wishlistUpdated", () => {
+                this.updateWishlist();
+            });
+        },
+
+        updateWishlist() {
+            const el = document.querySelector(".wishlist-count");
+            if (!el || !window.WishlistService) return;
+
+            el.textContent = WishlistService.getCount();
+        },
+
+
+        /* ===== AUTH ===== */
+        initAuth() {
+            this.renderAuth();
+        },
+
+        renderAuth() {
+            const authArea = document.getElementById("auth-area");
+            if (!authArea || !window.AuthService) return;
+
+            const user = AuthService.getCurrentUser();
+
+            if (user) {
+                authArea.innerHTML = `
+                    <div class="auth-user">
+                        <span class="user-name">Hi, ${user.name}</span>
+                        <button class="btn logout-btn">Logout</button>
+                    </div>
+                `;
+
+                authArea.querySelector(".logout-btn")
+                    .addEventListener("click", Actions.logout);
+
+            } else {
+                authArea.innerHTML = `
+                    <a href="login.html" class="btn">Login</a>
+                `;
+            }
+        }
+    };
+
+
+    /* ================= ACTIONS ================= */
+
+    const Actions = {
+
+        goToCart() {
+            window.location.href = "cart.html";
+        },
+
+        goToWishlist() {
+            window.location.href = "wishlist.html";
+        },
+
+        logout() {
+            AuthService?.logout();
+            Toast.show("Logged out successfully");
+
+            setTimeout(() => location.reload(), 700);
+        }
+    };
+
+
+    /* ================= TOAST SYSTEM ================= */
+
+    const Toast = {
+
+        show(message, type = "success") {
+
+            const colors = {
+                success: "#089da1",
+                error: "#ef4444",
+                warning: "#f59e0b"
+            };
+
+            const el = document.createElement("div");
+            el.className = "toast";
+            el.innerText = message;
+
+            Object.assign(el.style, {
+                position: "fixed",
+                bottom: "20px",
+                right: "20px",
+                background: colors[type] || colors.success,
+                color: "#fff",
+                padding: "12px 18px",
+                borderRadius: "8px",
+                boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+                zIndex: "9999",
+                opacity: "0",
+                transform: "translateY(20px)",
+                transition: "all 0.3s ease"
+            });
+
+            document.body.appendChild(el);
+
+            requestAnimationFrame(() => {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            });
+
+            setTimeout(() => {
+                el.style.opacity = "0";
+                el.style.transform = "translateY(20px)";
+                setTimeout(() => el.remove(), 300);
+            }, 2500);
+        }
+    };
+
+
+    /* ================= PUBLIC API ================= */
+
+    return {
+        init,
+        goToCart: Actions.goToCart,
+        goToWishlist: Actions.goToWishlist,
+        showToast: Toast.show
+    };
+
+})();
+
+
+/* ================= START ================= */
+
+document.addEventListener("DOMContentLoaded", App.init);

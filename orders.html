@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders | Readers Realm</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* ===== PAGE ===== */
+
+.orders-container {
+    padding: 40px 0;
+}
+
+/* ===== ORDER CARD ===== */
+
+.order-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ===== HEADER ===== */
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* ===== ITEMS ===== */
+
+.order-items {
+    margin-top: 10px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+/* ===== EMPTY ===== */
+
+.empty {
+    text-align: center;
+    margin-top: 50px;
+    color: #64748b;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+<nav class="navbar container">
+
+<div class="logo">
+<img src="images/logo.png">
+</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+</ul>
+
+</nav>
+</header>
+
+<div class="container orders-container">
+
+<h1>My Orders 📦</h1>
+
+<div id="orders-list"></div>
+
+</div>
+
+<!-- JS -->
+
+<script src="js/services/orderService.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+
+const container = document.getElementById("orders-list");
+
+/* ================= RENDER ================= */
+
+function renderOrders() {
+
+    const orders = OrderService.getOrders();
+
+    if (orders.length === 0) {
+        container.innerHTML = `
+            <div class="empty">
+                <h2>No orders yet 📦</h2>
+                <p>Start shopping now</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = orders.map(order => {
+
+        const itemsHTML = order.items.map(item => `
+            <div class="order-item">
+                <span>${item.title} × ${item.quantity}</span>
+                <span>₹${item.price * item.quantity}</span>
+            </div>
+        `).join("");
+
+        return `
+            <div class="order-card">
+
+                <div class="order-header">
+                    <strong>Order #${order.id}</strong>
+                    <span>${new Date(order.date).toLocaleDateString()}</span>
+                </div>
+
+                <div>Payment: ${order.paymentMethod}</div>
+
+                <div class="order-items">
+                    ${itemsHTML}
+                </div>
+
+                <h3>Total: ₹${order.total}</h3>
+
+            </div>
+        `;
+    }).join("");
+}
+
+/* ================= INIT ================= */
+
+renderOrders();
+
+</script>
+
+</body>
+
+</html>

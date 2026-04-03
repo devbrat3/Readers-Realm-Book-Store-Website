@@ -3,21 +3,16 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO -->
-    <title>Readers Realm | Book Store</title>
-    <meta name="description" content="Explore books, discover stories, and shop your favorites at Readers Realm.">
+<title>Readers Realm | Premium Bookstore</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
 </head>
 
@@ -26,177 +21,299 @@
 <!-- ================= NAVBAR ================= -->
 
 <header>
-    <nav class="navbar container">
+<nav class="navbar container">
 
-        <!-- LOGO -->
-        <div class="logo">
-            <img src="images/logo.png" alt="Readers Realm Logo">
-        </div>
+<div class="logo">
+<img src="images/logo.png" alt="Readers Realm">
+</div>
 
-        <!-- LINKS -->
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#featured">Books</a></li>
-            <li><a href="#arrivals">Arrivals</a></li>
-        </ul>
+<ul class="nav-links">
+<li><a href="#home">Home</a></li>
+<li><a href="#featured">Books</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#blog">Blog</a></li>
+</ul>
 
-        <!-- SEARCH -->
-        <div class="search-box">
-            <input type="text" placeholder="Search books...">
-        </div>
+<div class="nav-icons">
 
-        <!-- ICONS -->
-        <div class="nav-icons">
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search books...">
+</div>
 
-            <!-- ❤️ Wishlist (future feature) -->
-            <i class="fa-solid fa-heart" title="Wishlist"></i>
+<!-- FIXED CLICKABLE -->
+<div class="wishlist" id="wishlistBtn">
+<i class="fa-solid fa-heart"></i>
+<span class="wishlist-count">0</span>
+</div>
 
-            <!-- 🛒 CART -->
-            <div class="cart" onclick="goToCart()">
-                <i class="fa-solid fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
-            </div>
+<div class="cart" id="cartBtn">
+<i class="fa-solid fa-shopping-cart"></i>
+<span class="cart-count">0</span>
+</div>
 
-            <div id="auth-area"></div>
+<div id="auth-area"></div>
 
-        </div>
+</div>
 
-        <!-- MOBILE MENU -->
-        <div class="menu-toggle">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-
-    </nav>
+</nav>
 </header>
+
 
 <!-- ================= HERO ================= -->
 
 <section id="home" class="hero container">
 
-    <div class="hero-text">
-        <h1>Welcome to <span>Readers Realm</span></h1>
-        <p>
-            Discover books that inspire, entertain, and transform your thinking.
-        </p>
-        <a href="#featured" class="btn primary">Explore Books</a>
-    </div>
+<div class="hero-text">
 
-    <div class="hero-image">
-        <img src="images/table.png" alt="Books" loading="lazy">
-    </div>
+<h1>
+Discover Stories That <span>Stay With You</span>
+</h1>
+
+<p>
+Explore a premium collection of books across genres.
+Designed for seamless discovery and immersive reading.
+</p>
+
+<a href="#featured" class="btn primary">Explore Collection</a>
+
+</div>
+
+<div class="hero-image">
+<img src="images/table.png" alt="Books Collection">
+</div>
 
 </section>
+
 
 <!-- ================= SERVICES ================= -->
 
 <section class="services container">
 
-    <div class="service-card">
-        <i class="fa-solid fa-truck-fast"></i>
-        <h3>Fast Delivery</h3>
-        <p>Quick delivery anywhere.</p>
-    </div>
+<div class="service-card">
+<i class="fa-solid fa-truck fa-2x"></i>
+<h3>Fast Delivery</h3>
+<p>Lightning-fast delivery at your doorstep</p>
+</div>
 
-    <div class="service-card">
-        <i class="fa-solid fa-headset"></i>
-        <h3>24/7 Support</h3>
-        <p>Always available for you.</p>
-    </div>
+<div class="service-card">
+<i class="fa-solid fa-headset fa-2x"></i>
+<h3>24/7 Support</h3>
+<p>We’re here whenever you need help</p>
+</div>
 
-    <div class="service-card">
-        <i class="fa-solid fa-tag"></i>
-        <h3>Best Deals</h3>
-        <p>Affordable pricing for all.</p>
-    </div>
+<div class="service-card">
+<i class="fa-solid fa-tag fa-2x"></i>
+<h3>Best Pricing</h3>
+<p>Premium books at unbeatable prices</p>
+</div>
 
-    <div class="service-card">
-        <i class="fa-solid fa-lock"></i>
-        <h3>Secure Payment</h3>
-        <p>Safe and trusted checkout.</p>
-    </div>
+<div class="service-card">
+<i class="fa-solid fa-lock fa-2x"></i>
+<h3>Secure Checkout</h3>
+<p>Safe and encrypted transactions</p>
+</div>
 
 </section>
+
 
 <!-- ================= ABOUT ================= -->
 
 <section id="about" class="about container">
 
-    <div class="about-image">
-        <img src="images/about.png" alt="About Readers Realm" loading="lazy">
-    </div>
+<div class="about-image">
+<img src="images/about.png" alt="About Readers Realm">
+</div>
 
-    <div class="about-content">
-        <h2>About Us</h2>
-        <p>
-            Readers Realm is a modern digital bookstore designed for passionate readers.
-            Discover books, explore genres, and enjoy a seamless reading experience.
-        </p>
-    </div>
+<div class="about-text">
+
+<h2>Built for Readers, Designed for Experience</h2>
+
+<p>
+Readers Realm is a modern digital bookstore crafted for seamless discovery.
+Explore timeless classics, trending reads, and hidden gems.
+</p>
+
+<p>
+Clean UI, fast performance, and meaningful reading journeys.
+</p>
+
+<button class="btn primary">Learn More</button>
+
+</div>
 
 </section>
+
 
 <!-- ================= FEATURED ================= -->
 
 <section id="featured" class="container">
 
-    <div class="section-header">
-        <h2>Featured Books</h2>
-    </div>
+<div class="section-header">
+<h2>Featured Collection</h2>
+<p>Handpicked books loved by readers</p>
+</div>
 
-    <!-- 🔥 Dynamic Rendering -->
-    <div class="book-grid" id="book-list"></div>
+<div class="book-grid" id="book-list"></div>
+
+</section>
+
+
+<!-- ================= NEW ARRIVALS ================= -->
+
+<section class="container new-arrivals">
+
+<div class="section-header">
+<h2>New Arrivals</h2>
+<p>Fresh additions to our collection</p>
+</div>
+
+<div class="book-grid" id="top-selling"></div>
 
 </section>
 
-<!-- ================= ARRIVALS ================= -->
 
-<section id="arrivals" class="container">
+<!-- ================= REVIEWS ================= -->
 
-    <div class="section-header">
-        <h2>New Arrivals</h2>
-    </div>
+<section class="container">
 
-    <div class="book-grid">
+<div class="section-header">
+<h2>Reader Experiences</h2>
+<p>What people love about Readers Realm</p>
+</div>
 
-        <div class="book-card">
-            <img src="images/arrival_1.jpg" alt="New Arrival" loading="lazy">
-            <h3>New Book</h3>
-            <button class="btn">View</button>
-        </div>
+<div class="book-grid">
 
-    </div>
+<div class="testimonial">
+<p>"Beautiful design and smooth performance."</p>
+</div>
+
+<div class="testimonial">
+<p>"Clean, fast and premium UI experience."</p>
+</div>
+
+<div class="testimonial">
+<p>"Feels like a real production app."</p>
+</div>
+
+</div>
 
 </section>
+
+
+<!-- ================= BLOG ================= -->
+
+<section id="blog" class="container">
+
+<div class="section-header">
+<h2>From Our Blog</h2>
+<p>Insights, trends, and reading inspiration</p>
+</div>
+
+<div class="book-grid">
+
+<div class="book-card">
+<img src="images/blog1.jpg">
+<h3>Top Books of 2026</h3>
+</div>
+
+<div class="book-card">
+<img src="images/blog2.jpg">
+<h3>Reading Habits That Matter</h3>
+</div>
+
+<div class="book-card">
+<img src="images/blog3.jpg">
+<h3>Top Authors to Follow</h3>
+</div>
+
+</div>
+
+</section>
+
 
 <!-- ================= CTA ================= -->
 
 <section class="cta">
-    <h2>Start Your Reading Journey 📚</h2>
+
+<h2>Start Your Reading Journey 📚</h2>
+<p>Thousands of books. One seamless experience.</p>
+
+<button class="btn primary">Explore Now</button>
+
 </section>
+
 
 <!-- ================= FOOTER ================= -->
 
-<footer>
-    <p>© 2026 Readers Realm | All Rights Reserved</p>
+<footer class="footer">
+
+<div class="container footer-grid">
+
+<div class="footer-col">
+<h3>Readers Realm</h3>
+<p>Your digital destination for books and knowledge.</p>
+</div>
+
+<div class="footer-col">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#featured">Books</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#blog">Blog</a></li>
+</ul>
+</div>
+
+<div class="footer-col">
+<h4>Contact</h4>
+<p>Devbrat Kumar Saha</p>
+<p>devbratkumarsaha@gmail.com</p>
+<p>BCA | Sido Kanhu Murmu University, Dumka</p>
+</div>
+
+<div class="footer-col">
+<h4>Connect</h4>
+<div class="socials">
+<a href="https://www.linkedin.com/in/devbrat-kumar-saha-b09a2119a" target="_blank">LinkedIn</a>
+<a href="https://devbrat3.github.io/Portfolio/" target="_blank">Portfolio</a>
+</div>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2023 Devbrat Kumar Saha | All Rights Reserved</p>
+</div>
+
 </footer>
 
-<!-- ================= JS (CORRECT ORDER) ================= -->
 
-<!-- DATA -->
+<!-- ================= SCRIPTS ================= -->
+
 <script src="js/data.js"></script>
-
-<!-- SERVICES -->
 <script src="js/services/bookService.js"></script>
 <script src="js/services/cartService.js"></script>
+<script src="js/services/wishlistService.js"></script>
 <script src="js/services/orderService.js"></script>
 <script src="js/services/authService.js"></script>
 
-<!-- GLOBAL -->
 <script src="js/main.js"></script>
-
-<!-- PAGE LOGIC -->
 <script src="js/pages/home.js"></script>
+
+<!-- 🔥 FIX CLICK EVENTS -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById("cartBtn")?.addEventListener("click", () => {
+        window.App?.goToCart();
+    });
+
+    document.getElementById("wishlistBtn")?.addEventListener("click", () => {
+        window.App?.goToWishlist();
+    });
+
+});
+</script>
 
 </body>
 </html>

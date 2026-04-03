@@ -1,34 +1,60 @@
+/* ================= PAYMENT PAGE (FINAL OPTIMIZED) ================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    let selected = "";
+    let selectedMethod = "";
 
-    window.selectMethod = (el, method) => {
-        selected = method;
+    const methods = document.querySelectorAll(".method");
 
-        document.querySelectorAll(".method").forEach(m => {
-            m.classList.remove("active");
+    /* ================= SELECT METHOD ================= */
+
+    methods.forEach(el => {
+        el.addEventListener("click", () => {
+
+            selectedMethod = el.dataset.method;
+
+            methods.forEach(m => m.classList.remove("active"));
+            el.classList.add("active");
+
         });
+    });
 
-        el.classList.add("active");
-    };
+    /* ================= PAYMENT ================= */
 
     window.pay = () => {
 
-        if (!selected) {
-            alert("Select payment method");
+        if (!selectedMethod) {
+            window.App?.showToast("Select payment method ⚠️", "warning");
             return;
         }
 
         const user = JSON.parse(localStorage.getItem("user")) || {};
         const cart = CartService.getCart();
 
-        OrderService.placeOrder(user, cart);
+        if (!cart.length) {
+            window.App?.showToast("Cart is empty 🛍️", "error");
+            return;
+        }
+
+        /* ================= PLACE ORDER ================= */
+
+        const order = OrderService.placeOrder({
+            ...user,
+            paymentMethod: selectedMethod
+        }, cart);
+
+        /* ================= CLEAR CART ================= */
 
         CartService.clearCart();
 
-        alert("Payment Successful");
+        /* ================= SUCCESS ================= */
 
-        location.href = "index.html";
+        window.App?.showToast("Payment Successful ✅");
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1200);
+
     };
 
 });

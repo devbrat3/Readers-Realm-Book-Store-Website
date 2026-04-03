@@ -2,152 +2,160 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment | Readers Realm</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        .payment-wrapper {
-            margin-top: 40px;
-        }
+<title>Payment | Readers Realm</title>
 
-        .payment-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
+<link rel="stylesheet" href="css/style.css">
 
-        /* ================= METHODS ================= */
-        .payment-methods {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+<style>
 
-        .method {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+/* ===== LAYOUT ===== */
+.payment-wrapper {
+    margin-top: 40px;
+}
 
-        .method:hover {
-            border-color: #089da1;
-        }
+.payment-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
 
-        .method.active {
-            border-color: #089da1;
-            background: #f0fdfd;
-        }
+/* ===== METHODS ===== */
+.payment-methods {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
 
-        /* ================= SUMMARY ================= */
-        .summary-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            height: fit-content;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+.method {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-        .summary-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
+.method:hover {
+    border-color: #089da1;
+}
 
-        .summary-total {
-            font-size: 18px;
-            font-weight: bold;
-        }
+.method.active {
+    border-color: #089da1;
+    background: #f0fdfd;
+}
 
-        .pay-btn {
-            width: 100%;
-            margin-top: 15px;
-        }
+/* ===== SUMMARY ===== */
+.summary-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    height: fit-content;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
 
-        /* MOBILE */
-        @media(max-width:768px){
-            .payment-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.summary-total {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.pay-btn {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
 
 <!-- NAVBAR -->
 <header>
-    <nav class="navbar container">
-        <div class="logo">
-            <img src="images/logo.png">
-        </div>
+<nav class="navbar container">
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-        </ul>
-    </nav>
+<div class="logo">
+<img src="images/logo.png">
+</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+</ul>
+
+</nav>
 </header>
 
 <div class="container payment-wrapper">
 
-    <h1>Payment 💳</h1>
+<h1>Payment 💳</h1>
 
-    <div class="payment-layout">
+<div class="payment-layout">
 
-        <!-- LEFT: METHODS -->
-        <div class="payment-methods">
+<!-- METHODS -->
+<div class="payment-methods">
 
-            <h3>Select Payment Method</h3>
+<h3>Select Payment Method</h3>
 
-            <div class="method" onclick="selectMethod(this, 'UPI')">
-                UPI Payment
-            </div>
-
-            <div class="method" onclick="selectMethod(this, 'Card')">
-                Credit / Debit Card
-            </div>
-
-            <div class="method" onclick="selectMethod(this, 'Net Banking')">
-                Net Banking
-            </div>
-
-        </div>
-
-        <!-- RIGHT: SUMMARY -->
-        <div class="summary-box">
-
-            <h3>Order Summary</h3>
-
-            <div class="summary-line">
-                <span>Items</span>
-                <span id="item-count">0</span>
-            </div>
-
-            <div class="summary-line summary-total">
-                <span>Total</span>
-                <span id="total-price">₹0</span>
-            </div>
-
-            <button class="btn primary pay-btn" onclick="pay()">
-                Pay Now
-            </button>
-
-        </div>
-
-    </div>
+<div class="method" data-method="UPI">UPI Payment</div>
+<div class="method" data-method="Card">Credit / Debit Card</div>
+<div class="method" data-method="Net Banking">Net Banking</div>
 
 </div>
+
+<!-- SUMMARY -->
+<div class="summary-box">
+
+<h3>Order Summary</h3>
+
+<div class="summary-line">
+<span>Items</span>
+<span id="item-count">0</span>
+</div>
+
+<div class="summary-line summary-total">
+<span>Total</span>
+<span id="total-price">₹0</span>
+</div>
+
+<button class="btn primary pay-btn" id="payBtn">
+Pay Now
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- JS (ORDER MATTERS) -->
+
+<script src="js/services/cartService.js"></script>
+<script src="js/services/orderService.js"></script>
+<script src="js/services/authService.js"></script>
+<script src="js/main.js"></script>
 
 <script>
 
 /* ================= LOAD CART ================= */
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cart = CartService.getCart();
 
 const totalDisplay = document.getElementById("total-price");
 const itemCount = document.getElementById("item-count");
@@ -163,36 +171,60 @@ cart.forEach(item => {
 totalDisplay.innerText = "₹" + total;
 itemCount.innerText = count;
 
-/* ================= SELECT METHOD ================= */
+/* ================= PAYMENT METHOD ================= */
+
 let selectedMethod = "";
 
-function selectMethod(el, method) {
+document.querySelectorAll(".method").forEach(el => {
 
-    selectedMethod = method;
+    el.addEventListener("click", () => {
 
-    document.querySelectorAll(".method").forEach(m => {
-        m.classList.remove("active");
+        selectedMethod = el.dataset.method;
+
+        document.querySelectorAll(".method")
+            .forEach(m => m.classList.remove("active"));
+
+        el.classList.add("active");
+
     });
 
-    el.classList.add("active");
-}
+});
 
 /* ================= PAYMENT ================= */
-function pay() {
+
+document.getElementById("payBtn").addEventListener("click", () => {
 
     if (!selectedMethod) {
-        alert("Please select payment method");
-        return;
+        return showToast("Select payment method", "warning");
     }
 
-    alert(selectedMethod + " Payment Successful ✅");
+    if (!cart.length) {
+        return showToast("Cart is empty", "error");
+    }
 
+    const user = AuthService?.getCurrentUser() || {};
+
+    /* ===== CREATE ORDER ===== */
+    OrderService.createOrder({
+        items: cart,
+        user: user,
+        total: total,
+        paymentMethod: selectedMethod
+    });
+
+    /* ===== CLEAR CART ===== */
     localStorage.removeItem("cart");
 
-    window.location.href = "index.html";
-}
+    showToast("Payment successful ✅");
+
+    setTimeout(() => {
+        window.location.href = "orders.html";
+    }, 1000);
+
+});
 
 </script>
 
 </body>
+
 </html>

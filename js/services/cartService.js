@@ -1,52 +1,136 @@
-const CartService = {
+/* ================= CART SERVICE (FINAL OPTIMIZED) ================= */
 
-    getCart() {
-        return JSON.parse(localStorage.getItem("cart")) || [];
-    },
+const CartService = (() => {
 
-    saveCart(cart) {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    },
+    const KEY = "cart";
 
-    addItem(book) {
-        let cart = this.getCart();
+    /* ================= PRIVATE ================= */
 
-        const existing = cart.find(item => item.id === book.id);
-
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cart.push({ ...book, quantity: 1 });
+    function getData() {
+        try {
+            return JSON.parse(localStorage.getItem(KEY)) || [];
+        } catch {
+            return [];
         }
-
-        this.saveCart(cart);
-    },
-
-    removeItem(index) {
-        let cart = this.getCart();
-        cart.splice(index, 1);
-        this.saveCart(cart);
-    },
-
-    updateQuantity(index, delta) {
-        let cart = this.getCart();
-        cart[index].quantity += delta;
-
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
-
-        this.saveCart(cart);
-    },
-
-    clearCart() {
-        localStorage.removeItem("cart");
-    },
-
-    getTotal() {
-        let cart = this.getCart();
-        return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     }
-};
 
+    function saveData(data) {
+        localStorage.setItem(KEY, JSON.stringify(data));
+
+        // 🔥 Notify UI globally
+        document.dispatchEvent(new Event("cartUpdated"));
+    }
+
+    function findItem(cart, id) {
+        return cart.find(item => item.id === id);
+    }
+
+    /* ================= PUBLIC ================= */
+
+    return {
+
+        /* ===== GET CART ===== */
+        getCart() {
+            return getData();
+        },
+
+        /* ===== ADD ITEM ===== */
+        addItem(book, qty = 1) {
+
+            if (!book || !book.id) return;
+
+            const cart = getData();
+            const existing = findItem(cart, book.id);
+
+            if (existing) {
+                existing.quantity += qty;
+            } else {
+                cart.push({
+                    id: book.id,
+                    title: book.title,
+                    price: book.price,
+                    img: book.img,
+                    quantity: qty
+                });
+            }
+
+            saveData(cart);
+        },
+
+        /* ===== REMOVE ITEM ===== */
+        removeItem(id) {
+
+            let cart = getData();
+            cart = cart.filter(item => item.id !== id);
+
+            saveData(cart);
+        },
+
+        /* ===== UPDATE QTY ===== */
+        updateQuantity(id, delta) {
+
+            const cart = getData();
+            const item = findItem(cart, id);
+
+            if (!item) return;
+
+            item.quantity += delta;
+
+            if (item.quantity <= 0) {
+                this.removeItem(id);
+                return;
+            }
+
+            saveData(cart);
+        },
+
+        /* ===== SET QUANTITY (NEW - PREMIUM) ===== */
+        setQuantity(id, qty) {
+
+            const cart = getData();
+            const item = findItem(cart, id);
+
+            if (!item) return;
+
+            if (qty <= 0) {
+                this.removeItem(id);
+                return;
+            }
+
+            item.quantity = qty;
+            saveData(cart);
+        },
+
+        /* ===== CLEAR CART ===== */
+        clearCart() {
+            localStorage.removeItem(KEY);
+            document.dispatchEvent(new Event("cartUpdated"));
+        },
+
+        /* ===== TOTAL PRICE ===== */
+        getTotal() {
+            return getData().reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+        },
+
+        /* ===== TOTAL COUNT ===== */
+        getCount() {
+            return getData().reduce(
+                (sum, item) => sum + item.quantity,
+                0
+            );
+        },
+
+        /* ===== EXISTS ===== */
+        exists(id) {
+            return !!findItem(getData(), id);
+        }
+
+    };
+
+})();
+
+/* ===== GLOBAL ACCESS ===== */
 window.CartService = CartService;
